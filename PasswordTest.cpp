@@ -28,6 +28,20 @@ TEST(PasswordTest, single_number_password)
 	ASSERT_EQ(1, actual);
 }
 
+TEST(PasswordTest, capital_letter_password)
+{
+	Password my_password;
+	int actual = my_password.count_leading_characters("A");
+	ASSERT_EQ(1, actual);
+}
+
+TEST(PasswordTest, double_digit_number_password)
+{
+	Password my_password;
+	int actual = my_password.count_leading_characters("12");
+	ASSERT_EQ(2, actual);
+}
+
 TEST(PasswordTest, all_capital_letters_password)
 {
 	Password my_password;
