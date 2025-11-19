@@ -14,37 +14,82 @@ class PasswordTest : public ::testing::Test
 		virtual void TearDown(){} //clean up after each test, (before destructor)
 };
 
-TEST(PasswordTest, single_letter_password)
+// Test 1: count_leading_characters - empty string (covers if branch)
+TEST(PasswordTest, count_leading_characters_empty_string)
 {
 	Password my_password;
-	int actual = my_password.count_leading_characters("Z");
-	ASSERT_EQ(1, actual);
+	int actual = my_password.count_leading_characters("");
+	ASSERT_EQ(0, actual);
 }
 
-TEST(PasswordTest, single_number_password)
-{
-	Password my_password;
-	int actual = my_password.count_leading_characters("1");
-	ASSERT_EQ(1, actual);
-}
-
-TEST(PasswordTest, capital_letter_password)
+// Test 2: count_leading_characters - single character (covers while loop not entered)
+TEST(PasswordTest, count_leading_characters_single_char)
 {
 	Password my_password;
 	int actual = my_password.count_leading_characters("A");
 	ASSERT_EQ(1, actual);
 }
 
-TEST(PasswordTest, double_digit_number_password)
+// Test 3: count_leading_characters - same characters (covers while loop execution)
+TEST(PasswordTest, count_leading_characters_same_chars)
 {
 	Password my_password;
-	int actual = my_password.count_leading_characters("12");
-	ASSERT_EQ(2, actual);
+	int actual = my_password.count_leading_characters("AAA");
+	ASSERT_EQ(3, actual);
 }
 
-TEST(PasswordTest, all_capital_letters_password)
+// Test 4: count_leading_characters - different characters (covers while condition2 false)
+TEST(PasswordTest, count_leading_characters_different_chars)
 {
 	Password my_password;
-	int actual = my_password.count_leading_characters("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-	ASSERT_EQ(26, actual);
+	int actual = my_password.count_leading_characters("AB");
+	ASSERT_EQ(1, actual);
+}
+
+// Test 5: has_mixed_case - only uppercase (covers islower false, isupper true, return false)
+TEST(PasswordTest, has_mixed_case_only_uppercase)
+{
+	Password my_password;
+	bool actual = my_password.has_mixed_case("HELLO");
+	ASSERT_FALSE(actual);
+}
+
+// Test 6: has_mixed_case - only lowercase (covers islower true, isupper false, return false)
+TEST(PasswordTest, has_mixed_case_only_lowercase)
+{
+	Password my_password;
+	bool actual = my_password.has_mixed_case("hello");
+	ASSERT_FALSE(actual);
+}
+
+// Test 7: has_mixed_case - mixed case (covers both true, return true)
+TEST(PasswordTest, has_mixed_case_mixed)
+{
+	Password my_password;
+	bool actual = my_password.has_mixed_case("Hello");
+	ASSERT_TRUE(actual);
+}
+
+// Test 8: has_mixed_case - no letters (covers both false, return false)
+TEST(PasswordTest, has_mixed_case_no_letters)
+{
+	Password my_password;
+	bool actual = my_password.has_mixed_case("123!@#");
+	ASSERT_FALSE(actual);
+}
+
+// Test 9: unique_characters - all same (covers if branch false case)
+TEST(PasswordTest, unique_characters_all_same)
+{
+	Password my_password;
+	unsigned int actual = my_password.unique_characters("AAAA");
+	ASSERT_EQ(1, actual);
+}
+
+// Test 10: unique_characters - all different (covers if branch true case)
+TEST(PasswordTest, unique_characters_all_different)
+{
+	Password my_password;
+	unsigned int actual = my_password.unique_characters("ABCD");
+	ASSERT_EQ(4, actual);
 }
